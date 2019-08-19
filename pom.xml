@@ -16,8 +16,9 @@
   <packaging>pom</packaging>
 
   <properties>
-    <java.code.version>11</java.code.version>
+    <java.code.version>1.8</java.code.version>
 
+    <docker.skip>true</docker.skip>
   </properties>
 
   <repositories>
@@ -28,6 +29,7 @@
   </repositories>
 
   <modules>
+    <module>microprofile-config</module>
   </modules>
 
   <build>
@@ -35,6 +37,63 @@
 
     <defaultGoal>clean package</defaultGoal>
 
+    <plugins>
+      <plugin>
+        <groupId>io.fabric8</groupId>
+        <artifactId>docker-maven-plugin</artifactId>
+        <version>0.31.0</version>
+        <configuration>
+          <verbose>true</verbose>
+          <skip>${docker.skip}</skip>
+          <images>
+            <image>
+              <name>${IMAGE_NAME}</name>
+              <build>
+                <dockerFile>${DOCKER_FILE}</dockerFile>
+                <dockerFileDir>${project.basedir}</dockerFileDir>
+                <assembly>
+                  <descriptorRef>artifact</descriptorRef>
+                </assembly>
+              </build>
+            </image>
+          </images>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>build</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
   </build>
 
+  <profiles>
+    <profile>
+      <id>docker-openliberty</id>
+      <properties>
+        <docker.skip>false</docker.skip>
+        <IMAGE_NAME>gedoplan/${project.artifactId}-openliberty</IMAGE_NAME>
+        <DOCKER_FILE>Dockerfile-openliberty</DOCKER_FILE>
+      </properties>
+    </profile>
+    <profile>
+      <id>docker-payara</id>
+      <properties>
+        <docker.skip>false</docker.skip>
+        <IMAGE_NAME>gedoplan/${project.artifactId}-payara</IMAGE_NAME>
+        <DOCKER_FILE>Dockerfile-payara</DOCKER_FILE>
+      </properties>
+    </profile>
+    <profile>
+      <id>docker-wildfly</id>
+      <properties>
+        <docker.skip>false</docker.skip>
+        <IMAGE_NAME>gedoplan/${project.artifactId}-wildfly</IMAGE_NAME>
+        <DOCKER_FILE>Dockerfile-wildfly</DOCKER_FILE>
+      </properties>
+    </profile>
+  </profiles>
 </project>
