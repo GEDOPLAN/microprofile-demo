@@ -4,17 +4,17 @@
 
 The demo application contains a REST service `de.gedoplan.showcase.ConfigResource` for demonstration of config value api usage and injection. The rest endpoints are:
 
-* http://localhost:8080/java-version
+* http://localhost:8080/config/java-version
 +
   This will retrieve the Java version used for running the server. `ConfigResource` uses the configuration api for looking up the value.
   The config source used here is system properties (`java.version`).
   
-* http://localhost:8080/home
+* http://localhost:8080/config/home
 +
   This will retrieve the user's home directory. `ConfigResource` leverages config value injections here. This also shows the usage of `Optional` as injection target.
   The config source used here is environment variables (`HOME` for Linux and `USERPROFILE` for Windows).
   
-* http://localhost:8080/answer
+* http://localhost:8080/config/answer
 +
   this will retrieve the answer to the ultimate question of life, the universe and everything (see the brilliant novel "The Hitchhiker's Guide to the Galaxy" written by Douglas Adams). The config source is `META-INF/microprofile-config.properties`. The demo shows simple type conversion (injection target is `int`) and mandatory configuration (deployment will fail, if the config value is missing).   
 
