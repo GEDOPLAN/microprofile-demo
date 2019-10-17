@@ -30,15 +30,16 @@
 
   <modules>
     <module>microprofile-config</module>
+    <module>microprofile-rest-client</module>
   </modules>
 
   <dependencies>
-<!--     <dependency> -->
-<!--       <groupId>javax</groupId> -->
-<!--       <artifactId>javaee-web-api</artifactId> -->
-<!--       <version>8.0</version> -->
-<!--       <scope>provided</scope> -->
-<!--     </dependency> -->
+    <!-- <dependency> -->
+    <!-- <groupId>javax</groupId> -->
+    <!-- <artifactId>javaee-web-api</artifactId> -->
+    <!-- <version>8.0</version> -->
+    <!-- <scope>provided</scope> -->
+    <!-- </dependency> -->
 
     <dependency>
       <groupId>jakarta.platform</groupId>
@@ -55,6 +56,13 @@
       <version>3.0</version>
       <scope>provided</scope>
     </dependency>
+
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.18.8</version>
+    </dependency>
+
   </dependencies>
 
   <build>
