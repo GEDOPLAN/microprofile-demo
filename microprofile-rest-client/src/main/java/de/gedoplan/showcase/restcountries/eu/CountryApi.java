@@ -9,17 +9,17 @@ import javax.ws.rs.Produces;
 
 import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 
-@Path("/v2")
+@Path("v2")
 @RegisterRestClient
 public interface CountryApi {
 
   @GET
-  @Path("/all")
+  @Path("all")
   @Produces("application/json")
   Collection<Country> getAll();
 
   @GET
-  @Path("/alpha/{code}")
+  @Path("alpha/{code}")
   @Produces("application/json")
   Country getByCode(@PathParam("code") String code);
 
