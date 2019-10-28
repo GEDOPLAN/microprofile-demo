@@ -2,6 +2,8 @@
 
 *Demo for MicroProfile Rest Client*
 
+== Environment / preconditions
+
 There is a public rest service at http://restcountries.eu/rest supplying country data a JSON objects. This demo application uses two of the various api endpoints supported there:
 
 * http://restcountries.eu/rest/all 
@@ -12,28 +14,39 @@ produces a collection of country objects,
 +
 produces the country object for a given 2- or 3-character country id (like `de` for Germany).
 
+== Demo application
+
+This project build a war file deployable to any JEE 8 application server with MicroProfile support.
+
 The classes/interfaces in package `de.gedoplan.showcase.restcountries.eu` describe the external service.
 
 The test class `de.gedoplan.showcase.restcountries.eu.CountryApiTest` demonstrates the usage of the rest client api for the interface mentioned above.
 
 The main class `de.gedoplan.showcase.presentation.CountryPresenter` uses the same rest client interface, but injected as CDI bean. The presenter is used for the JSF page `index.html` which will display the overall country count (URL: http://localhost:8080).
 
+== Server runtimes
+
 The application can be deployed into JEE 8 servers with MP Config support, including:
 
-* OpenLiberty (with features `javaee-8.0` and `mpConfig-1.3` enabled)
-* Payara (Full or Micro)
+* OpenLiberty (with features `javaee-8.0` and `mpRestClient-1.3` enabled)
 * WildFly
 
 The host names and ports used above depend on your configuration:
 
 * OpenLiberty uses port `9080` by default, but the docker image mentioned below configures the server for using `8080` instead.
-* Payara uses port `8080` by default.
 * WildFly uses port `8080` by default.
+
+== Docker
 
 If you want to test the application with docker, you can do so by building a docker image with one of the following maven commands:
 
 * OpenLiberty: `mvn -Pdocker-openliberty`
-* Payara: `mvn -Pdocker-payara`
 * WildFly: `mvn -Pdocker-wildfly`
 
-Run the build image by `docker run -d -p 8080:8080 gedoplan/microprofile-config-XXX` with `XXX` replaced by `openliberty`, `payara` or `wildfly` resp. 
+Run the build image by `docker run -d -p 8080:8080 gedoplan/microprofile-config-XXX` with `XXX` replaced by `openliberty` or `wildfly` resp.
+
+== Problems
+
+Payara should be on the list above as well. Unfortunately Payara seems to fail to produce an injectable rest client bean and displays
+the following deployment error message:
+`Unsatisfied dependencies for type CountryApi with qualifiers @RestClient`  
