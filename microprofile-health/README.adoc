@@ -1,0 +1,44 @@
+= health-demo
+
+*Demo for MicroProfile Health*
+
+== Demo application
+
+This project builds a war file deployable to any JEE 8 application server with MicroProfile support.
+
+The demo application contains two services `de.gedoplan.service.Service1` and `de.gedoplan.service.Service2`, which supply a boolean property `ok` representing the service avalibility assumed for demonstration. `Service1` simulates the liveness of the application while `Service2` simulates its readiness.
+
+These boolean properties can be displayed and modified by a simple web page `http://localhost:8080/index.xhtml` for testing purposes.
+
+The two corresponding health check classes in `de.gedoplan.health` are used for collecting the health statuses and supplying them to MicroProfile Health for aggregation into an overall system health status.
+
+== Server runtimes
+
+The application can be deployed into JEE 8 servers with MP Health support, including:
+
+* OpenLiberty (with features `javaee-8.0` and `mpHealth-2.0` enabled)
+* WildFly
+
+The health status can be retrieved from these endpoints:
+
+* http://localhost:8080/health/live: Liveness
+* http://localhost:8080/health/ready: Readiness
+* http://localhost:8080/health: Aggregation of both.
+
+The host names and ports used above depend on your configuration:
+
+* OpenLiberty uses port `9080` by default, but the docker image mentioned below configures the server for using `8080` instead.
+* WildFly distiguishes between application port `8080` (for `/health-demo`) and management port `9990` (for `/health`).
+
+== Docker
+
+If you want to test the application with docker, you can do so by building a docker image with one of the following maven commands:
+
+* OpenLiberty: `mvn -Pdocker-openliberty`
+* WildFly: `mvn -Pdocker-wildfly`
+
+Run the build image by `docker run -d -p 8080:8080 -p 9990:9990 gedoplan/health-demo-XXX` with `XXX` replaced by `openliberty`, `payara` or `wildfly` resp. The port mapping `-p 9990:9990` is needed for WildFly only.
+
+== Problems
+
+Payara does not support MicroProfile Health 2.0 yet (as of October 2019, version 5.193).
