@@ -26,9 +26,9 @@ The demo application contains a REST service `de.gedoplan.showcase.ConfigResourc
 
 The application can be deployed into JEE 8 servers with MP Config support, including:
 
-* OpenLiberty (with features `javaee-8.0` and `mpConfig-1.3` enabled)
-* Payara (Full or Micro)
-* WildFly
+* OpenLiberty 19.0.0.9 (with features `javaee-8.0` and `mpConfig-1.3` enabled)
+* Payara 5.193.1 (Full or Micro)
+* WildFly 18.0.0.Final
 
 The host names and ports used above depend on your configuration:
 

@@ -28,8 +28,9 @@ The main class `de.gedoplan.showcase.presentation.CountryPresenter` uses the sam
 
 The application can be deployed into JEE 8 servers with MP Config support, including:
 
-* OpenLiberty (with features `javaee-8.0` and `mpRestClient-1.3` enabled)
-* WildFly
+* OpenLiberty 19.0.0.9 (with features `javaee-8.0` and `mpRestClient-1.3` enabled)
+* WildFly 18.0.0.Final
+
 
 The host names and ports used above depend on your configuration:
 
