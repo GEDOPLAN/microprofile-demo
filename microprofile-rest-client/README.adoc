@@ -16,7 +16,7 @@ produces the country object for a given 2- or 3-character country id (like `de` 
 
 == Demo application
 
-This project build a war file deployable to any JEE 8 application server with MicroProfile support.
+This project builds a war file deployable to any JEE 8 application server with MicroProfile support.
 
 The classes/interfaces in package `de.gedoplan.showcase.restcountries.eu` describe the external service.
 

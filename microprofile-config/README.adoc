@@ -2,6 +2,10 @@
 
 *Demo for MicroProfile Config*
 
+== Demo application
+
+This project builds a war file deployable to any JEE 8 application server with MicroProfile support.
+
 The demo application contains a REST service `de.gedoplan.showcase.ConfigResource` for demonstration of config value api usage and injection. The rest endpoints are:
 
 * http://localhost:8080/config/java-version
@@ -18,6 +22,8 @@ The demo application contains a REST service `de.gedoplan.showcase.ConfigResourc
 +
   this will retrieve the answer to the ultimate question of life, the universe and everything (see the brilliant novel "The Hitchhiker's Guide to the Galaxy" written by Douglas Adams). The config source is `META-INF/microprofile-config.properties`. The demo shows simple type conversion (injection target is `int`) and mandatory configuration (deployment will fail, if the config value is missing).   
 
+== Server runtimes
+
 The application can be deployed into JEE 8 servers with MP Config support, including:
 
 * OpenLiberty (with features `javaee-8.0` and `mpConfig-1.3` enabled)
@@ -29,6 +35,8 @@ The host names and ports used above depend on your configuration:
 * OpenLiberty uses port `9080` by default, but the docker image mentioned below configures the server for using `8080` instead.
 * Payara uses port `8080` by default.
 * WildFly uses port `8080` by default.
+
+== Docker
 
 If you want to test the application with docker, you can do so by building a docker image with one of the following maven commands:
 
