@@ -1,22 +1,22 @@
 = microprofile-config
 
-*Demo for MicroProfile Config*
+*Demo for MicroProfile Rest Client*
 
-The demo application contains a REST service `de.gedoplan.showcase.ConfigResource` for demonstration of config value api usage and injection. The rest endpoints are:
+There is a public rest service at http://restcountries.eu/rest supplying country data a JSON objects. This demo application uses two of the various api endpoints supported there:
 
-* http://localhost:8080/config/java-version
+* http://restcountries.eu/rest/all 
 +
-  This will retrieve the Java version used for running the server. `ConfigResource` uses the configuration api for looking up the value.
-  The config source used here is system properties (`java.version`).
-  
-* http://localhost:8080/config/home
+produces a collection of country objects,
+
+* http://restcountries.eu/rest/alpha/{code}
 +
-  This will retrieve the user's home directory. `ConfigResource` leverages config value injections here. This also shows the usage of `Optional` as injection target.
-  The config source used here is environment variables (`HOME` for Linux and `USERPROFILE` for Windows).
-  
-* http://localhost:8080/config/answer
-+
-  this will retrieve the answer to the ultimate question of life, the universe and everything (see the brilliant novel "The Hitchhiker's Guide to the Galaxy" written by Douglas Adams). The config source is `META-INF/microprofile-config.properties`. The demo shows simple type conversion (injection target is `int`) and mandatory configuration (deployment will fail, if the config value is missing).   
+produces the country object for a given 2- or 3-character country id (like `de` for Germany).
+
+The classes/interfaces in package `de.gedoplan.showcase.restcountries.eu` describe the external service.
+
+The test class `de.gedoplan.showcase.restcountries.eu.CountryApiTest` demonstrates the usage of the rest client api for the interface mentioned above.
+
+The main class `de.gedoplan.showcase.presentation.CountryPresenter` uses the same rest client interface, but injected as CDI bean. The presenter is used for the JSF page `index.html` which will display the overall country count (URL: http://localhost:8080).
 
 The application can be deployed into JEE 8 servers with MP Config support, including:
 

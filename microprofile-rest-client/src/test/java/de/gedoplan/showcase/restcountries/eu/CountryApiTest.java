@@ -18,7 +18,7 @@ public class CountryApiTest {
   public void before() {
     try {
       this.client = RestClientBuilder.newBuilder()
-          .baseUri(new URI("https://restcountries.eu/rest"))
+          .baseUri(new URI("http://restcountries.eu/rest"))
           .build(CountryApi.class);
     } catch (Exception e) {
       throw new IllegalArgumentException(e);
