@@ -31,6 +31,7 @@
   <modules>
     <module>microprofile-config</module>
     <module>microprofile-health</module>
+    <module>microprofile-metrics</module>
     <module>microprofile-rest-client</module>
   </modules>
 
@@ -62,6 +63,7 @@
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
       <version>1.18.8</version>
+      <scope>provided</scope>
     </dependency>
 
   </dependencies>
@@ -84,7 +86,7 @@
               <name>${IMAGE_NAME}</name>
               <build>
                 <dockerFile>${DOCKER_FILE}</dockerFile>
-                <dockerFileDir>${project.basedir}</dockerFileDir>
+                <contextDir>${project.basedir}</contextDir>
                 <assembly>
                   <descriptorRef>artifact</descriptorRef>
                 </assembly>

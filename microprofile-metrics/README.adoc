@@ -1,0 +1,42 @@
+= metrics-demo
+
+*Demo for MicroProfile Metrics*
+
+== Demo application
+
+This project builds a war file deployable to any JEE 8 application server with MicroProfile support.
+
+The demo application exposes rest endpoints for CRUD services for an entity named `Person`. The `GET` and `POST` methods use metrics annotations `@Timed` and `@Counted` for measuring the invocation time and count of calls resp.
+
+A second service - `CustomMetricsService` - supplies a single custom metrics value by means of a `@Gauge` annotated method.
+
+The metrics can be retrieved from `http://localhost:8080/metrics` and include standard and vendor specific values. After using `GET` or `POST` requests for `http://localhost:8080/rs/person`, application metrics will show up, too, and will reflect the REST calls made.
+
+Sample REST calls for getting and posting persons using `curl` are:
+
+* `curl http://localhost:8080/rs/person`: Get all persons
+* `curl -d '{"name":"Duck","firstname":"Tick"}' -H "Content-Type: application/json" -X POST http://localhost:8080/rs/person`: Post a new person
+
+== Server runtimes
+
+The application can be deployed into JEE 8 servers with MP Health support, including:
+
+* OpenLiberty 19.0.0.9 (with features `javaee-8.0`, `mpMetrics-2.0` and `monitor-1.0` enabled)
+* Payara 5.193.1 (Full or Micro)
+* WildFly 18.0.0.Final
+
+The host names and ports used above depend on your configuration:
+
+* OpenLiberty uses port `9080` by default, but the docker image mentioned below configures the server for using `8080` instead.
+* Payara uses port `8080` by default.
+* WildFly distiguishes between application port `8080` (for `/rs`) and management port `9990` (for `/metrics`).
+
+== Docker
+
+If you want to test the application with docker, you can do so by building a docker image with one of the following maven commands:
+
+* OpenLiberty: `mvn -Pdocker-openliberty`
+* Payara: `mvn -Pdocker-payara`
+* Payara: `mvn -Pdocker-wildfly`
+
+Run the build image by `docker run -d -p 8080:8080 -p 9990:9990 gedoplan/metrics-demo-XXX` with `XXX` replaced by `openliberty`, `payara` or `wildfly` resp. The port mapping `-p 9990:9990` is needed for WildFly only.
