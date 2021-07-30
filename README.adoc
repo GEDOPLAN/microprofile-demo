@@ -1,0 +1,49 @@
+= Demo for MicroProfile Config
+
+The application contains simple demos for MicroProfile components in dedicated packages:
+
+MP Config::
+
+The class `de.gedoplan.showcase.config.ConfigEndpoint` publishes three REST endpoints for GET requests:
+
+* `http://localhost:8080/config/java-version`: Return the Java version (system property value)
+* `http://localhost:8080/config/home`: Return the use home directory path (from an environment variable)
+* `http://localhost:8080/config/answer`: Return a value from `META-INF/microprofile-config.properties`
+
+== Standard JEE server deployment
+
+The WAR file can be deployed in any Jakarta EE 8 server, e. g. WildFly 24.
+
+== WildFly Bootable JAR
+
+The project defines the maven profile `wildfly-bootable-jar`. If it's activated for building (i. e. `mvn -Pwildfly-bootable-jar`) an additional JAR file is built: `target/microprofile-demo-bootable.jar` (*). It is a hollow JAR containing a WildFly server customized to just the extension needed (`jaxrs`, `cdi`, `jpa`, `h2-default-datasource`). The application can be started by
+
+`java -jar target/microprofile-demo-bootable.jar --deployment=target/microprofile-demo.war`
+
+The WildFly JAR plugin used for building the hollow JAR can also start the application in development mode:
+
+`mvn -Pwildfly-bootable-jar wildfly-jar:dev-watch`
+
+In this mode the server watches the program sources and hot reloads the application if something changes.
+
+(*) Due to a bug in the plugin, the hollow JAR cannot be renamed into e.g. `wildfly-bootable.jar`, because the JAR wouldn't be found by the development mode runner.
+
+== Payara Micro
+
+If you enable the maven profile `payara-micro` (i. e. `mvn -Ppayara-micro`), Payara Micro is downloaded into `target/payara-micro.jar`. It's a Jakarta EE Web Profile server including some extensions. The application can be started by
+
+`java -jar target/payara-micro.jar target/microprofile-demo.war`
+
+== Quarkus
+
+The Quarkus build can be run with `mvn -Pquarkus`. It results in a directory `target\quarkus-app` containing the runner JAR `quarkus-run.jar` and subdirectories for application and runtime infrastructure. The application can be started by
+
+`java -jar target/quarkus-app/quarkus-run.jar`
+
+The Quarkus plugin used for building can also start the application in development mode:
+
+`mvn -Pquarkus quarkus:dev`
+
+In this mode the runtime watches the program sources and hot reloads the application if something changes.
+
+It should be noted, that the project setup for quarkus in `pom.xml` is more complicated than it would be in normal projects: We wanted to have exactly the same source for both classical JEE environments and quarkus. This made it necessary to swich the project packaging from `war` for JEE to `jar` for Quarkus with the help of the maven property `packaging.type`, which can be done only, if the Quarkus plugin is configured with `quarkus.bootstrap.effective-model-builder` as `true`. The drawback of using the effective POM is a slower build, so you would not enable this option in normal projects.
