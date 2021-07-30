@@ -7,6 +7,7 @@ import javax.inject.Inject;
 
 import org.eclipse.microprofile.health.HealthCheck;
 import org.eclipse.microprofile.health.HealthCheckResponse;
+import org.eclipse.microprofile.health.HealthCheckResponseBuilder;
 import org.eclipse.microprofile.health.Readiness;
 
 @ApplicationScoped
@@ -18,11 +19,20 @@ public class ReadinessCheck implements HealthCheck {
 
   @Override
   public HealthCheckResponse call() {
-    return HealthCheckResponse
-        .named("Service2")
-        .state(this.service2.isOk())
-        .withData("memory", Runtime.getRuntime().freeMemory())
-        .build();
+    // Breaking change in MP 4: state is renamed to status
+    // Workaround here: Use up and down instead of state/status
+    // return HealthCheckResponse
+    //     .named("Service2")
+    //     .state(this.service2.isOk())
+    //     .withData("memory", Runtime.getRuntime().freeMemory())
+    //     .build();
+    HealthCheckResponseBuilder builder = HealthCheckResponse
+      .named("Service2")
+      .withData("memory", Runtime.getRuntime().freeMemory());
+    if (this.service2.isOk())
+      return builder.up().build();
+    else
+      return builder.down().build();
   }
 
 }
