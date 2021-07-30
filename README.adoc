@@ -10,13 +10,25 @@ The class `de.gedoplan.showcase.config.ConfigEndpoint` publishes three REST endp
 * `http://localhost:8080/config/home`: Return the use home directory path (from an environment variable)
 * `http://localhost:8080/config/answer`: Return a value from `META-INF/microprofile-config.properties`
 
+MP Health::
+
+The package `de.gedoplan.showcase.health` contains a liveness and a readiness check. Both are simulated and get their status from a simple boolean config property.
+
+MP Health offers the REST endpoints `http://localhost:8080/health/live` and `http://localhost:8080/health/ready`.
+
+Notes:
+
+* WildFly uses port `9990` instead of `8080`.
+* Quarkus uses the context `q` as default for MicroProfile endpoints (e. g. `http://localhost:8080/q/health/live`). 
+This additional context has been disabled in `application.properties` to match the endpoints for the other environments.
+
 == Standard JEE server deployment
 
-The WAR file can be deployed in any Jakarta EE 8 server, e. g. WildFly 24.
+The WAR file can be deployed in any Jakarta EE 8 & MicroProfile 4 server, e. g. WildFly 24.
 
 == WildFly Bootable JAR
 
-The project defines the maven profile `wildfly-bootable-jar`. If it's activated for building (i. e. `mvn -Pwildfly-bootable-jar`) an additional JAR file is built: `target/microprofile-demo-bootable.jar` (*). It is a hollow JAR containing a WildFly server customized to just the extension needed (`jaxrs`, `cdi`, `jpa`, `h2-default-datasource`). The application can be started by
+The project defines the maven profile `wildfly-bootable-jar`. If it's activated for building (i. e. `mvn -Pwildfly-bootable-jar`) an additional JAR file is built: `target/microprofile-demo-bootable.jar` (*). It is a hollow JAR containing a WildFly server customized to just the extension needed (`jaxrs`, `cdi`, `microprofile-platform`). The application can be started by
 
 `java -jar target/microprofile-demo-bootable.jar --deployment=target/microprofile-demo.war`
 
