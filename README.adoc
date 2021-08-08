@@ -12,6 +12,8 @@ The class `de.gedoplan.showcase.config.ConfigEndpoint` publishes three REST endp
 * `http://localhost:8080/config/java-version`: Return the Java version (system property value)
 * `http://localhost:8080/config/home`: Return the use home directory path (from an environment variable)
 * `http://localhost:8080/config/answer`: Return a value from `META-INF/microprofile-config.properties`
+* `http://localhost:8080/config/profile`: Return two values changing with the configuration profile (set by the property `mp.config.profile`)
+* `http://localhost:8080/config/expression`: Return a value from a property expession using several other properties
 
 MP Health::
 
@@ -69,6 +71,10 @@ It should be noted, that the project setup for quarkus in `pom.xml` is more comp
 
 == Notes
 
-* WildFly uses port `9990` instead of `8080`.
-* Quarkus uses the context `q` as default for MicroProfile endpoints (e. g. `http://localhost:8080/q/health/live`). 
+* WildFly:
+** uses port `9990` instead of `8080`.
+
+* Quarkus:
+** uses the context `q` as default for MicroProfile endpoints (e. g. `http://localhost:8080/q/health/live`). 
 This additional context has been disabled in `application.properties` to match the endpoints of the other environments.
+** has its own configuration profile feature: Property `quarkus.profile` is kind of a predecessor of `mp.config.profile`. Both properties are used when evaluating profiled configuration values (e.g. `%dev.database)`, but are set independently. This has to by aligned in the future somehow.
