@@ -16,9 +16,10 @@ public class CustomMetricsService {
   }
 
   /*
-   * Metrics collection via @Gauge (and @Timed, @Counted, ...) is done by CDI interceptors and happens therefore only,
-   * if bean instances have been created. This demo 'service' isn't used anywhere else, leaving it uninstantiated.
-   * Therefore we cheat a little bit by observing the application scope inititlization event, forcing bean instantiation then.
+   * Metrics annotations are scanned at start/deployment time and the corresponding metrics are registered in the
+   * application metrics registry. This happens for all annotations with the exception of @Gauge, which can be
+   * registered lazily when the declaring bean is being instantiated.
+   * Therefore we cheat a little bit by observing the application scope initialization event, forcing bean instantiation then.
    */
   void startUp(@Observes @Initialized(ApplicationScoped.class) Object object) {
   }

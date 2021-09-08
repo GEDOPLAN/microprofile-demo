@@ -9,7 +9,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import org.eclipse.microprofile.metrics.annotation.Timed;
+import org.eclipse.microprofile.metrics.annotation.SimplyTimed;
 
 @ApplicationScoped
 @Path("timed")
@@ -17,8 +17,10 @@ public class TimedEndpoint {
 
   @GET
   @Produces(MediaType.TEXT_PLAIN)
-  @Timed(name = "getHello")
-  // @SimplyTimed(name = "getHello")
+  // @Timed // (name = "getHello")
+  @SimplyTimed
+  // @Metered
+  // @ConcurrentGauge
   public String getHello() {
 
     randomDelay();
@@ -29,6 +31,7 @@ public class TimedEndpoint {
   private static void randomDelay() {
     try {
       TimeUnit.MILLISECONDS.sleep(ThreadLocalRandom.current().nextLong(250));
+      // TimeUnit.SECONDS.sleep(ThreadLocalRandom.current().nextLong(50));
     } catch (InterruptedException e) {
       // ignore
     }

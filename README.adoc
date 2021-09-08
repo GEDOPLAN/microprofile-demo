@@ -23,12 +23,12 @@ MP Health offers the REST endpoints `http://localhost:8080/health/live` and `htt
 
 MP Metrics::
 
-The class `de.gedoplan.showcase.metrics.TimedEndpoint` contains a REST endpoint returning `hello` while providing call count and time statistics for calls of `http://localhost:8080/metrics/timed`. In order to generate some resonable demo data, the calls are randomly delayed. Execute a few calls before requesting metrics.
+The class `de.gedoplan.showcase.metrics.TimedEndpoint` contains a REST endpoint returning `hello` while providing call count and time statistics for calls of `http://localhost:8080/timed`. In order to generate some resonable demo data, the calls are randomly delayed. Execute a few calls before requesting metrics.
 
 Another class - `de.gedoplan.showcase.metrics.CustomMetricsService` - demonstrates how to supply arbitrary application data as metrics.
 
 MP Metrics offers the REST endpoints `http://localhost:8080/metrics/base`, `http://localhost:8080/metrics/vendor` and `http://localhost:8080/metrics/application` for scoped metrics and `http://localhost:8080/metrics` as overall aggregation.
-You can switch from OpenMetrics format (a.k.a. Prometheus format) to JSON by using the header `access: application/json`.
+You can switch from OpenMetrics format (a.k.a. Prometheus format) to JSON by using the header `accept: application/json`.
 Times in OpenMetrics format are in seconds whereas times in JSON are in nanoseconds.
 
 == Standard JEE server deployment
