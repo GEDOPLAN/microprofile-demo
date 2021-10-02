@@ -24,9 +24,9 @@
 
     <quarkus.platform.artifact-id>quarkus-universe-bom</quarkus.platform.artifact-id>
     <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
-    <quarkus.platform.version>2.0.2.Final</quarkus.platform.version>
+    <quarkus.platform.version>2.2.3.Final</quarkus.platform.version>
 
-    <wildfly.bootable.jar.version>5.0.1.Final</wildfly.bootable.jar.version>
+    <wildfly.bootable.jar.version>5.0.2.Final</wildfly.bootable.jar.version>
 
     <wildfly.version>24.0.0.Final</wildfly.version>
   </properties>
@@ -97,9 +97,9 @@
     <profile>
       <id>wildfly-bootable-jar</id>
       <properties>
-        <!-- 
+        <!--
         Bug in WildFly plugin:
-        Specifying custom names for the bootable JAR does not work with goal dev-watch. 
+        Specifying custom names for the bootable JAR does not work with goal dev-watch.
         <wildfly.bootable.run.jar.file.name>wildfly-bootable.jar</wildfly.bootable.run.jar.file.name>
         <wildfly.bootable.package.output.file.name>wildfly-bootable.jar</wildfly.bootable.package.output.file.name>
         -->
@@ -139,6 +139,9 @@
                 <goals>
                   <goal>package</goal>
                 </goals>
+                <configuration>
+                  <output-file-name>wildfly-bootable.jar</output-file-name>
+                </configuration>
               </execution>
             </executions>
           </plugin>
@@ -221,6 +224,10 @@
         <dependency>
           <groupId>io.quarkus</groupId>
           <artifactId>quarkus-arc</artifactId>
+        </dependency>
+        <dependency>
+          <groupId>io.quarkus</groupId>
+          <artifactId>quarkus-rest-client</artifactId>
         </dependency>
         <dependency>
           <groupId>io.quarkus</groupId>

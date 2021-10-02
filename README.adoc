@@ -31,6 +31,16 @@ MP Metrics offers the REST endpoints `http://localhost:8080/metrics/base`, `http
 You can switch from OpenMetrics format (a.k.a. Prometheus format) to JSON by using the header `accept: application/json`.
 Times in OpenMetrics format are in seconds whereas times in JSON are in nanoseconds.
 
+MP Rest Client::
+
+`de.gedoplan.showcase.restclient.restcountries.eu.CountryApi` defines part of the public API of `http://restcountries.eu`, a demo service supplying various country data. Unfortunately the service has been replaced recently by `http://countrylayer.com/` requiring a (free) registration. Therefore this project supplies a mock service `RestCountriesEuMockEndpoint`. `META-INF/microprofile-config.properties` contains the local mock uri.
+
+`de.gedoplan.showcase.restclient` demonstrates access to the (mocked) external service with these endpoints:
+
+* `http://localhost:8080/restclient`: using an injected MP REST proxy,
+* `http://localhost:8080/restclient/api`: using the MP REST proxy via api,
+* `http://localhost:8080/restclient/classic`: using the REST client api from Jakarta RESTful Webservice.
+
 == Standard JEE server deployment
 
 The WAR file can be deployed in any Jakarta EE 8 & MicroProfile 4 server, e. g. WildFly 24.
@@ -72,9 +82,9 @@ It should be noted, that the project setup for quarkus in `pom.xml` is more comp
 == Notes
 
 * WildFly:
-** uses port `9990` instead of `8080`.
+** uses port `9990` instead of `8080` for MicroProfile endpoints (e. g. `http://localhost:9990/health/live`).
 
 * Quarkus:
 ** uses the context `q` as default for MicroProfile endpoints (e. g. `http://localhost:8080/q/health/live`). 
 This additional context has been disabled in `application.properties` to match the endpoints of the other environments.
-** has its own configuration profile feature: Property `quarkus.profile` is kind of a predecessor of `mp.config.profile`. Both properties are used when evaluating profiled configuration values (e.g. `%dev.database)`, but are set independently. This has to by aligned in the future somehow.
+** has its own configuration profile feature: Property `quarkus.profile` is kind of a predecessor of `mp.config.profile`. Both properties are used when evaluating profiled configuration values (e.g. `%dev.database)`, but are set independently. This will have to be aligned in the future somehow.
