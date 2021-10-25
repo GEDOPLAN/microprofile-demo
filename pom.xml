@@ -20,6 +20,9 @@
 
     <java.code.version>11</java.code.version>
 
+    <jee.version>8.0.0</jee.version>
+    <mp.version>4.1</mp.version>
+
     <payara.version>5.2021.8</payara.version>
 
     <quarkus.platform.artifact-id>quarkus-universe-bom</quarkus.platform.artifact-id>
@@ -28,7 +31,7 @@
 
     <wildfly.bootable.jar.version>6.0.0.Final</wildfly.bootable.jar.version>
 
-    <wildfly.version>24.0.0.Final</wildfly.version>
+    <wildfly.version>24.0.1.Final</wildfly.version>
   </properties>
 
   <repositories>
@@ -38,28 +41,11 @@
     </repository>
   </repositories>
 
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>jakarta.platform</groupId>
-        <artifactId>jakarta.jakartaee-web-api</artifactId>
-        <version>8.0.0</version>
-      </dependency>
-
-      <dependency>
-        <groupId>org.eclipse.microprofile</groupId>
-        <artifactId>microprofile</artifactId>
-        <type>pom</type>
-        <version>4.1</version>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
-
   <dependencies>
     <dependency>
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
-      <version>1.18.20</version>
+      <version>1.18.22</version>
       <scope>provided</scope>
     </dependency>
   </dependencies>
@@ -72,7 +58,7 @@
   <!-- Following are profiles for different project setups / runtime selections -->
   <profiles>
 
-    <!-- Profile for standard JEE - just one dependency -->
+    <!-- Profile for standard JEE & MP - just two dependencies-->
     <profile>
       <id>standard-jee</id>
       <activation>
@@ -82,11 +68,13 @@
         <dependency>
           <groupId>jakarta.platform</groupId>
           <artifactId>jakarta.jakartaee-web-api</artifactId>
+          <version>${jee.version}</version>
           <scope>provided</scope>
         </dependency>
         <dependency>
           <groupId>org.eclipse.microprofile</groupId>
           <artifactId>microprofile</artifactId>
+          <version>${mp.version}</version>
           <type>pom</type>
         </dependency>
       </dependencies>
@@ -108,11 +96,13 @@
         <dependency>
           <groupId>jakarta.platform</groupId>
           <artifactId>jakarta.jakartaee-web-api</artifactId>
+          <version>${jee.version}</version>
           <scope>provided</scope>
         </dependency>
         <dependency>
           <groupId>org.eclipse.microprofile</groupId>
           <artifactId>microprofile</artifactId>
+          <version>${mp.version}</version>
           <type>pom</type>
         </dependency>
       </dependencies>
@@ -157,11 +147,13 @@
         <dependency>
           <groupId>jakarta.platform</groupId>
           <artifactId>jakarta.jakartaee-web-api</artifactId>
+          <version>${jee.version}</version>
           <scope>provided</scope>
         </dependency>
         <dependency>
           <groupId>org.eclipse.microprofile</groupId>
           <artifactId>microprofile</artifactId>
+          <version>${mp.version}</version>
           <type>pom</type>
         </dependency>
       </dependencies>
