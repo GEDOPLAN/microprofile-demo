@@ -7,7 +7,7 @@ The REST endpoint paths (`http://localhost:8080/...`) shown are quite common, bu
 
 MP Config::
 
-The class `de.gedoplan.showcase.config.ConfigEndpoint` publishes three REST endpoints for GET requests:
+The class `ConfigResource` publishes three REST endpoints for GET requests:
 
 * `http://localhost:8080/config/java-version`: Return the Java version (system property value)
 * `http://localhost:8080/config/home`: Return the use home directory path (from an environment variable)
@@ -23,7 +23,7 @@ MP Health offers the REST endpoints `http://localhost:8080/health/live` and `htt
 
 MP Metrics::
 
-The class `de.gedoplan.showcase.metrics.TimedEndpoint` contains a REST endpoint returning `hello` while providing call count and time statistics for calls of `http://localhost:8080/timed`. In order to generate some resonable demo data, the calls are randomly delayed. Execute a few calls before requesting metrics.
+The class `TimedResource` contains a REST endpoint returning `hello` while providing call count and time statistics for calls of `http://localhost:8080/timed`. In order to generate some resonable demo data, the calls are randomly delayed. Execute a few calls before requesting metrics.
 
 Another class - `de.gedoplan.showcase.metrics.CustomMetricsService` - demonstrates how to supply arbitrary application data as metrics.
 
@@ -33,7 +33,7 @@ Times in OpenMetrics format are in seconds whereas times in JSON are in nanoseco
 
 MP Rest Client::
 
-`de.gedoplan.showcase.restclient.restcountries.eu.CountryApi` defines part of the public API of `http://restcountries.eu`, a demo service supplying various country data. Unfortunately the service has been replaced recently by `http://countrylayer.com/` requiring a (free) registration. Therefore this project supplies a mock service `RestCountriesEuMockEndpoint`. `META-INF/microprofile-config.properties` contains the local mock uri.
+`de.gedoplan.showcase.restclient.restcountries.eu.CountryApi` defines part of the public API of `http://restcountries.eu`, a demo service supplying various country data. Unfortunately the service has been replaced recently by `http://countrylayer.com/` requiring a (free) registration. Therefore this project supplies a mock service `RestCountriesEuMockResource`. `META-INF/microprofile-config.properties` contains the local mock uri.
 
 `de.gedoplan.showcase.restclient` demonstrates access to the (mocked) external service with these endpoints:
 
@@ -49,15 +49,13 @@ The WAR file can be deployed in any Jakarta EE 8 & MicroProfile 4 server, e. g. 
 
 The project defines the maven profile `wildfly-bootable-jar`. If it's activated for building (i. e. `mvn -Pwildfly-bootable-jar`) an additional JAR file is built: `target/microprofile-demo-bootable.jar` (*). It is a hollow JAR containing a WildFly server customized to just the extension needed (`jaxrs`, `cdi`, `microprofile-platform`). The application can be started by
 
-`java -jar target/microprofile-demo-bootable.jar --deployment=target/microprofile-demo.war`
+`java -jar target/wildfly-bootable.jar --deployment=target/microprofile-demo.war`
 
 The WildFly JAR plugin used for building the hollow JAR can also start the application in development mode:
 
 `mvn -Pwildfly-bootable-jar wildfly-jar:dev-watch`
 
 In this mode the server watches the program sources and hot reloads the application if something changes.
-
-(*) Due to a bug in the plugin, the hollow JAR cannot be renamed into e.g. `wildfly-bootable.jar`, because the JAR wouldn't be found by the development mode runner.
 
 == Payara Micro
 

@@ -13,7 +13,7 @@ import org.eclipse.microprofile.metrics.annotation.SimplyTimed;
 
 @ApplicationScoped
 @Path("timed")
-public class TimedEndpoint {
+public class TimedResource {
 
   @GET
   @Produces(MediaType.TEXT_PLAIN)

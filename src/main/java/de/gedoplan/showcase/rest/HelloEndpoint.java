@@ -1,4 +1,4 @@
-package de.gedoplan.showcase.common;
+package de.gedoplan.showcase.rest;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.ws.rs.GET;

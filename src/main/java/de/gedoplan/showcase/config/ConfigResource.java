@@ -15,7 +15,7 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 @Path("config")
 @ApplicationScoped
 @Produces(MediaType.TEXT_PLAIN)
-public class ConfigEndpoint {
+public class ConfigResource {
 
   // Demo of simple config api usage reading a value (normally) set by a system property
   @Path("java-version")
