@@ -7,7 +7,7 @@ import javax.ws.rs.Produces;
 
 @Path("hello")
 @ApplicationScoped
-public class HelloEndpoint {
+public class HelloResource {
 
     @GET
     @Produces("text/plain")
