@@ -13,7 +13,6 @@ import javax.ws.rs.core.MediaType;
 import de.gedoplan.showcase.entity.Planet;
 import de.gedoplan.showcase.persistence.PlanetRepository;
 import de.gedoplan.showcase.service.PlanetService;
-import org.eclipse.microprofile.metrics.annotation.Counted;
 
 @ApplicationScoped
 @Path("planet")
@@ -24,7 +23,6 @@ public class PlanetResource {
   PlanetRepository planetRepository;
 
   @GET
-  @Counted
   public Collection<Planet> get() {
     return this.planetRepository.findAll();
   }
