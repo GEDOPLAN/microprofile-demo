@@ -15,7 +15,7 @@ import de.gedoplan.showcase.persistence.PlanetRepository;
 import de.gedoplan.showcase.service.PlanetService;
 
 @ApplicationScoped
-@Path("planet")
+@Path("planets")
 @Produces(MediaType.APPLICATION_JSON)
 public class PlanetResource {
 
