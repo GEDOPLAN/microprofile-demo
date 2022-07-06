@@ -43,41 +43,48 @@ MP Rest Client::
 
 == Standard JEE server deployment
 
-The WAR file can be deployed in any Jakarta EE 8 & MicroProfile 4 server, e. g. WildFly 24.
+The WAR file can be deployed in any Jakarta EE 8 & MicroProfile 4 server, e. g. WildFly 26.
 
 == WildFly Bootable JAR
 
-The project defines the maven profile `wildfly-bootable-jar`. If it's activated for building (i. e. `mvn -Pwildfly-bootable-jar`) an additional JAR file is built: `target/microprofile-demo-bootable.jar` (*). It is a hollow JAR containing a WildFly server customized to just the extension needed (`jaxrs`, `cdi`, `microprofile-platform`). The application can be started by
+The project defines the maven profile `wildfly`. If it's activated by creating an empty file named `jee_wildfly` in the project directory.
+
+The Maven build now produces an additional JAR file: `target/wildfly-bootable.jar`. It is a hollow JAR containing a WildFly server customized to just the extension needed (`jaxrs`, `cdi`, `microprofile-platform`). The application can be started by
 
 `java -jar target/wildfly-bootable.jar --deployment=target/microprofile-demo.war`
 
 The WildFly JAR plugin used for building the hollow JAR can also start the application in development mode:
 
-`mvn -Pwildfly-bootable-jar wildfly-jar:dev-watch`
+`mvn wildfly-jar:dev-watch`
 
 In this mode the server watches the program sources and hot reloads the application if something changes.
 
 == Payara Micro
 
-If you enable the maven profile `payara-micro` (i. e. `mvn -Ppayara-micro`), Payara Micro is downloaded into `target/payara-micro.jar`. It's a Jakarta EE Web Profile server including some extensions. The application can be started by
+If you enable the maven profile `payara` by creating an empty file `jee_payara` in the project directory, the Maven build downloads Payara Micro into `target/payara-micro.jar`. It's a Jakarta EE Web Profile server including some extensions. The application can be started by
 
 `java -jar target/payara-micro.jar target/microprofile-demo.war`
 
 == Quarkus
 
-The Quarkus build can be run with `mvn -Pquarkus`. It results in a directory `target\quarkus-app` containing the runner JAR `quarkus-run.jar` and subdirectories for application and runtime infrastructure. The application can be started by
+The Quarkus profile can be enabled with an empty file named `jee_quarkus` in the project directory.
+
+The Maven build creates a directory `target\quarkus-app` containing the runner JAR `quarkus-run.jar` and subdirectories for application and runtime infrastructure. The application can be started by
 
 `java -jar target/quarkus-app/quarkus-run.jar`
 
 The Quarkus plugin used for building can also start the application in development mode:
 
-`mvn -Pquarkus quarkus:dev`
+`mvn quarkus:dev`
 
 In this mode the runtime watches the program sources and hot reloads the application if something changes.
 
 It should be noted, that the project setup for quarkus in `pom.xml` is more complicated than it would be in normal projects: We wanted to have exactly the same source for both classical JEE environments and quarkus. This made it necessary to swich the project packaging from `war` for JEE to `jar` for Quarkus with the help of the maven property `packaging.type`, which can be done only, if the Quarkus plugin is configured with `quarkus.bootstrap.effective-model-builder` as `true`. The drawback of using the effective POM is a slower build, so you would not enable this option in normal projects.
 
 == Notes
+
+* Profile activation files:
+** Max. one file `jee_...` may be used at the same time.
 
 * WildFly:
 ** uses port `9990` instead of `8080` for MicroProfile endpoints (e. g. `http://localhost:9990/health/live`).

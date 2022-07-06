@@ -25,9 +25,9 @@
 
     <payara.version>5.2022.1</payara.version>
 
-    <quarkus.platform.artifact-id>quarkus-universe-bom</quarkus.platform.artifact-id>
+    <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
     <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
-    <quarkus.platform.version>2.7.4.Final</quarkus.platform.version>
+    <quarkus.platform.version>2.9.1.Final</quarkus.platform.version>
 
     <wildfly.bootable.jar.version>7.0.0.Final</wildfly.bootable.jar.version>
 
@@ -51,7 +51,7 @@
   </dependencies>
 
   <build>
-    <defaultGoal>package</defaultGoal>
+    <defaultGoal>clean package</defaultGoal>
     <finalName>${project.artifactId}</finalName>
   </build>
 
@@ -84,7 +84,12 @@
 
     <!-- Profile for WildFly bootable JAR: Standard JEE plus plugin for provisioning a WildFly hollow JAR -->
     <profile>
-      <id>wildfly-bootable-jar</id>
+      <id>wildfly</id>
+      <activation>
+        <file>
+          <exists>${basedir}/jee_wildfly</exists>
+        </file>
+      </activation>
       <dependencies>
         <dependency>
           <groupId>jakarta.platform</groupId>
@@ -136,7 +141,12 @@
 
     <!-- Profile for Payara Micro: Standard JEE plus download of Payara Micro -->
     <profile>
-      <id>payara-micro</id>
+      <id>payara</id>
+      <activation>
+        <file>
+          <exists>${basedir}/jee_payara</exists>
+        </file>
+      </activation>
       <dependencies>
         <dependency>
           <groupId>jakarta.platform</groupId>
@@ -193,6 +203,11 @@
     <!-- Profile for Quarkus: Customized dependencies for the building blocks used plus plugin for build and dev mode -->
     <profile>
       <id>quarkus</id>
+      <activation>
+        <file>
+          <exists>${basedir}/jee_quarkus</exists>
+        </file>
+      </activation>
       <properties>
         <packaging.type>jar</packaging.type>
       </properties>
